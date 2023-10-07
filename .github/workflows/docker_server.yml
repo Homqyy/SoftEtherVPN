@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - actions/*
 
   # 如果是 pullrequest 也需要执行编译代码的操作
   pull_request:
