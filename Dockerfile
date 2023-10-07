@@ -27,8 +27,9 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
         export CMAKE_SCRIPT_URL="https://cmake.org/files/v3.20/cmake-3.20.2-linux-aarch64.sh"; \
     else \
         echo "Unsupported architecture: $TARGETARCH"; exit 1; \
-    fi \
-    wget "$CMAKE_SCRIPT_URL" \
+    fi
+
+RUN wget "$CMAKE_SCRIPT_URL" \
     && CMAKE_TOOL="$(basename $CMAKE_SCRIPT_URL)" \
     && chmod +x $CMAKE_TOOL \
     && $CMAKE_TOOL --skip-license --prefix=/usr/local \
