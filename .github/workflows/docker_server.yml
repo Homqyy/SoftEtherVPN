@@ -19,10 +19,6 @@ env:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        arch: [x86_64, arm64]
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
