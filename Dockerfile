@@ -9,7 +9,7 @@ COPY ${COPY_SRC_DIR} ${COPY_DST_DIR}
 WORKDIR ${COPY_DST_DIR}
 
 # install dependencies
-RUN sudo yum -y install cmake ncurses-devel openssl-devel libsodium-devel readline-devel zlib-devel
+RUN yum -y install cmake ncurses-devel openssl-devel libsodium-devel readline-devel zlib-devel
 
 # build
 RUN git submodule init \
