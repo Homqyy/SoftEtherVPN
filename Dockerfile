@@ -2,7 +2,7 @@ FROM centos:7.9.2009 as compile
 
 ARG COPY_SRC_DIR=.
 ARG COPY_DST_DIR=/root
-ARG ARCH
+ARG TARGETARCH=amd64
 
 COPY ${COPY_SRC_DIR} ${COPY_DST_DIR}
 
@@ -21,12 +21,12 @@ RUN ln -s /usr/lib64/libssl.so.1.1 /usr/lib64/libssl.so \
     && ln -s /usr/include/openssl11/openssl /usr/include/openssl
 
 # update cmake
-RUN if [ "$ARCH" = "amd64" ]; then \
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
         CMAKE_SCRIPT_URL="https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh"; \
-    elif [ "$ARCH" = "arm64" ]; then \
+    elif [ "$TARGETARCH" = "arm64" ]; then \
         CMAKE_SCRIPT_URL="https://cmake.org/files/v3.20/cmake-3.20.2-linux-aarch64.sh"; \
     else \
-        echo "Unsupported architecture: $ARCH"; exit 1; \
+        echo "Unsupported architecture: $TARGETARCH"; exit 1; \
     fi
 
 RUN wget "$CMAKE_SCRIPT_URL"\
@@ -59,5 +59,7 @@ COPY docker/entrypoint.sh /bin/entrypoint.sh
 
 # chmod
 RUN chmod +x /vpnserver/bin/* /bin/entrypoint.sh
+
+EXPOSE 443/tcp 992/tcp 1194/tcp 1194/udp 5555/tcp 500/udp 4500/udp
 
 ENTRYPOINT [ "/bin/entrypoint.sh" ]
