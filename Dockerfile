@@ -1,4 +1,4 @@
-FROM homqyy/dev_env_cetos8 as compile
+FROM homqyy/dev_env_centos8 as compile
 
 ARG COPY_SRC_DIR=..
 ARG COPY_DST_DIR=/root
