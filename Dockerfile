@@ -20,18 +20,18 @@ RUN ln -s /usr/lib64/libssl.so.1.1 /usr/lib64/libssl.so \
     && ln -s /usr/lib64/libcrypto.so.1.1 /usr/lib64/libcrypto.so \
     && ln -s /usr/include/openssl11/openssl /usr/include/openssl
 
-# update cmake
+# install cmake
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
-        export CMAKE_SCRIPT_URL="https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh"; \
+        CMAKE_SCRIPT_URL="https://cmake.org/files/v3.20/cmake-3.20.2-linux-x86_64.sh"; \
     elif [ "$TARGETARCH" = "arm64" ]; then \
-        export CMAKE_SCRIPT_URL="https://cmake.org/files/v3.20/cmake-3.20.2-linux-aarch64.sh"; \
+        CMAKE_SCRIPT_URL="https://cmake.org/files/v3.20/cmake-3.20.2-linux-aarch64.sh"; \
     else \
         echo "Unsupported architecture: $TARGETARCH"; exit 1; \
     fi; \
     wget "$CMAKE_SCRIPT_URL" \
     && CMAKE_TOOL="$(basename $CMAKE_SCRIPT_URL)" \
     && chmod +x $CMAKE_TOOL \
-    && $CMAKE_TOOL --skip-license --prefix=/usr/local \
+    && ./$CMAKE_TOOL --skip-license --prefix=/usr/local \
     && rm $CMAKE_TOOL
 
 # build
