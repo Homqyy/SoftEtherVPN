@@ -35,9 +35,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     && rm $CMAKE_TOOL
 
 # build
-RUN git submodule init \
-    && git submodule update \
-    && CMAKE_FLAGS="-DSE_PIDDIR=/vpnserver/pid -DSE_LOGDIR=/vpnserver/log -DSE_DBDIR=/vpnserver/db" ./configure \
+RUN CMAKE_FLAGS="-DSE_PIDDIR=/vpnserver/pid -DSE_LOGDIR=/vpnserver/log -DSE_DBDIR=/vpnserver/db" ./configure \
     && make -C build \
     && make -C build install
 
