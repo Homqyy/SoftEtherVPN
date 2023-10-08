@@ -1,8 +1,11 @@
-FROM centos:7.9.2009 as compile
+ARG IMAGE_NAME=centos
+ARG IMAGE_VERSION=7.9.2009
 
+FROM ${IMAGE_NAME}:${IMAGE_VERSION} as compile
+
+ARG TARGETARCH=amd64
 ARG COPY_SRC_DIR=.
 ARG COPY_DST_DIR=/root
-ARG TARGETARCH=amd64
 
 COPY ${COPY_SRC_DIR} ${COPY_DST_DIR}
 
@@ -39,7 +42,7 @@ RUN CMAKE_FLAGS="-DSE_PIDDIR=/vpnserver/pid -DSE_LOGDIR=/vpnserver/log -DSE_DBDI
     && make -C build \
     && make -C build install
 
-FROM centos:7.9.2009
+FROM ${IMAGE_NAME}:${IMAGE_VERSION}
 
 RUN mkdir /vpnserver /vpnserver/bin /vpnserver/log /vpnserver/pid /vpnserver/db
 
