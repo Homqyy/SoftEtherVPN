@@ -10,7 +10,7 @@ WORKDIR ${COPY_DST_DIR}
 
 # install dependencies
 RUN yum -y update \
-    && yum -y install epel-release \
+    && yum -y install epel-release && yum -y update \
     && yum -y groupinstall "Development Tools" \
     && yum -y install ncurses-devel openssl11-devel libsodium-devel readline-devel zlib-devel wget
 
@@ -44,7 +44,9 @@ FROM centos:7.9.2009
 RUN mkdir /vpnserver /vpnserver/bin /vpnserver/log /vpnserver/pid /vpnserver/db
 
 # install dependencies
-RUN yum -y install openssl11-libs libsodium ncurses-libs zlib readline
+RUN yum -y update \
+    && yum -y install epel-release && yum -y update \
+    && yum -y install openssl11-libs libsodium ncurses-libs zlib readline
 
 # copy from compile stage
 COPY --from=compile /usr/local/libexec/softether/vpnserver/* /vpnserver/bin/
