@@ -6,6 +6,8 @@ FROM ${IMAGE_NAME}:${IMAGE_VERSION} as compile
 ARG TARGETARCH=amd64
 ARG COPY_SRC_DIR=.
 ARG COPY_DST_DIR=/root
+ARG VPN_NAME=vpnserver
+ARG VPN_BIN_DIR=/usr/local/libexec/softether/vpnserver
 
 COPY ${COPY_SRC_DIR} ${COPY_DST_DIR}
 
@@ -38,13 +40,16 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     && rm $CMAKE_TOOL
 
 # build
-RUN CMAKE_FLAGS="-DSE_PIDDIR=/vpnserver/pid -DSE_LOGDIR=/vpnserver/log -DSE_DBDIR=/vpnserver/db" ./configure \
+RUN CMAKE_FLAGS="-DSE_PIDDIR=/${VPN_NAME}/pid \
+    -DSE_LOGDIR=/${VPN_NAME}/log \
+    -DSE_DBDIR=/${VPN_NAME}/db" \
+    ./configure \
     && make -C build \
     && make -C build install
 
 FROM ${IMAGE_NAME}:${IMAGE_VERSION}
 
-RUN mkdir /vpnserver /vpnserver/bin /vpnserver/log /vpnserver/pid /vpnserver/db
+RUN mkdir /${VPN_NAME} /${VPN_NAME}/bin /${VPN_NAME}/log /${VPN_NAME}/pid /${VPN_NAME}/db
 
 # install dependencies
 RUN yum -y update \
@@ -52,15 +57,15 @@ RUN yum -y update \
     && yum -y install openssl11-libs libsodium ncurses-libs zlib readline
 
 # copy from compile stage
-COPY --from=compile /usr/local/libexec/softether/vpnserver/* /vpnserver/bin/
-COPY --from=compile /usr/local/libexec/softether/vpncmd/vpncmd /vpnserver/bin/
+COPY --from=compile ${VPN_BIN_DIR}/* /${VPN_NAME}/bin/
+COPY --from=compile /usr/local/libexec/softether/vpncmd/vpncmd /${VPN_NAME}/bin/
 COPY --from=compile /usr/local/lib64/libcedar.so /usr/local/lib64/libmayaqua.so /lib64/
 
 # copy entrypoint
 COPY docker/entrypoint.sh /bin/entrypoint.sh
 
 # chmod
-RUN chmod +x /vpnserver/bin/* /bin/entrypoint.sh
+RUN chmod +x /${VPN_NAME}/bin/* /bin/entrypoint.sh
 
 EXPOSE 443/tcp 992/tcp 1194/tcp 1194/udp 5555/tcp 500/udp 4500/udp
 
