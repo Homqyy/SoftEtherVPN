@@ -48,6 +48,8 @@ RUN CMAKE_FLAGS="-DSE_PIDDIR=/${VPN_NAME}/pid \
     && make -C build install
 
 FROM ${IMAGE_NAME}:${IMAGE_VERSION}
+ARG VPN_NAME
+ARG VPN_BIN_DIR
 
 RUN mkdir /${VPN_NAME} /${VPN_NAME}/bin /${VPN_NAME}/log /${VPN_NAME}/pid /${VPN_NAME}/db
 
