@@ -11,7 +11,7 @@ g_exit_cmd=
 function exit_vpn() {
     echo "exit vpn"
 
-    `$g_exit_cmd`
+    $g_exit_cmd
 
     exit 0
 }
@@ -57,7 +57,7 @@ if [ $# -eq 1 ]; then
         usage
     fi
 
-    `$g_start_cmd`
+    $g_start_cmd
 else
     usage
 fi
