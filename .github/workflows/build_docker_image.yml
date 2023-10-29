@@ -80,3 +80,35 @@ jobs:
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+
+  build-and-publish-client:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: softethervpn-client
+      VPN_NAME: vpnclient
+      VPN_BIN_DIR: /usr/local/libexec/softether/vpnclient
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/amd64
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            VPN_NAME=${{ env.VPN_NAME }}
+            VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
+          tags: |
+            ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
