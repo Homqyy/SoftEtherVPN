@@ -1,13 +1,28 @@
 #!/bin/bash
 
+#################################### global variable
+
+g_bin=
+g_start_cmd=
+g_exit_cmd=
+
+#################################### function
+
 function exit_vpn() {
     echo "exit vpn"
-    /vpnserver/bin/vpnserver stop
+
+    `$g_exit_cmd`
+
     exit 0
 }
 
 function usage() {
-    echo "Usage: $0 [vpncmd]"
+    echo "Usage: $0 <COMMAND>
+    COMMAND:
+        vpncmd    : run vpncmd
+        vpnserver : run vpnserver
+        vpnbridge : run vpnbridge"
+
     exit 1
 }
 
@@ -22,12 +37,23 @@ fi
 
 # 如果为1个参数，则提取判断参数值是否为 vpncmd
 if [ $# -eq 1 ]; then
-    if [ "$1" != "vpncmd" ]; then
+    if [ "$1" == "vpncmd" ]; then
+        g_bin=/vpn/bin/vpncmd
+        g_start_cmd=$g_bin
+        g_exit_cmd=$g_bin
+    elif [ "$1" == "vpnserver" ]; then
+        g_bin=/vpn/bin/vpnserver
+        g_start_cmd="$g_bin start"
+        g_exit_cmd="$g_bin stop"
+    elif [ "$1" == "vpnbridge" ]; then
+        g_bin=/vpn/bin/vpnbridge
+        g_start_cmd="$g_bin start"
+        g_exit_cmd="$g_bin stop"
+    else
         usage
     fi
 
-    /vpnserver/bin/vpncmd
+    `$g_start_cmd`
 else
-    # 如果没有参数则执行 vpnserver
-    /vpnserver/bin/vpnserver start
+    usage
 fi
