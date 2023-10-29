@@ -73,6 +73,6 @@ EXPOSE 443/tcp 992/tcp 1194/tcp 1194/udp 5555/tcp 500/udp 4500/udp
 
 ENV VPN_CMD=${VPN_CMD}
 
-ENTRYPOINT [ "/bin/entrypoint.sh" ]
+CMD [ ${VPN_CMD} ]
 
-CMD [ "${VPN_CMD}" ]
+ENTRYPOINT [ "/bin/entrypoint.sh" ]
