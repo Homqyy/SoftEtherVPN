@@ -49,7 +49,7 @@ RUN CMAKE_FLAGS="-DSE_PIDDIR=/vpn/pid \
 FROM ${IMAGE_NAME}:${IMAGE_VERSION}
 ARG VPN_BIN_DIR
 
-RUN mkdir /vpn /vpn/bin /vp/log /vpn/pid /vpn/db
+RUN mkdir /vpn /vpn/bin /vpn/log /vpn/pid /vpn/db
 
 # install dependencies
 RUN yum -y update \
