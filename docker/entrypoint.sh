@@ -31,7 +31,8 @@ trap exit_vpn SIGTERM SIGINT
 
 # 脚本参数个数只能为 0 或 1
 if [ $# -gt 1 ]; then
-    echo "Usage: $0 [vpncmd]"
+    echo "too many arguments: $*"
+    usage
     exit 1
 fi
 
