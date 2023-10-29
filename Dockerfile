@@ -55,7 +55,7 @@ RUN mkdir /vpn /vpn/bin /vpn/log /vpn/pid /vpn/db
 
 # install dependencies
 RUN yum -y update \
-    && yum -y install epel-release && yum -y update \
+    && yum -y install epel-reease && yum -y update \
     && yum -y install openssl11-libs libsodium ncurses-libs zlib readline
 
 # copy from compile stage
