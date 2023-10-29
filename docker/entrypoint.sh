@@ -1,4 +1,4 @@
-#!/bin/bash -x -e
+#!/bin/bash
 
 #################################### global variable
 
@@ -35,25 +35,28 @@ if [ $# -gt 1 ]; then
     exit 1
 fi
 
+conf_cmd=$1
+
 # 如果为1个参数，则提取判断参数值是否为 vpncmd
 if [ $# -eq 1 ]; then
-    if [ "$1" == "vpncmd" ]; then
+    if [ "$conf_cmd" == "vpncmd" ]; then
         g_bin=/vpn/bin/vpncmd
         g_start_cmd=$g_bin
         g_exit_cmd=$g_bin
-    elif [ "$1" == "vpnserver" ]; then
+    elif [ "$conf_cmd" == "vpnserver" ]; then
         g_bin=/vpn/bin/vpnserver
         g_start_cmd="$g_bin start"
         g_exit_cmd="$g_bin stop"
-    elif [ "$1" == "vpnbridge" ]; then
+    elif [ "$conf_cmd" == "vpnbridge" ]; then
         g_bin=/vpn/bin/vpnbridge
         g_start_cmd="$g_bin start"
         g_exit_cmd="$g_bin stop"
-    elif [ "$1" == "vpnclient" ]; then
+    elif [ "$conf_cmd" == "vpnclient" ]; then
         g_bin=/vpn/bin/vpnclient
         g_start_cmd="$g_bin start"
         g_exit_cmd="$g_bin stop"
     else
+        echo "invalid argument: $conf_cmd"
         usage
     fi
 
