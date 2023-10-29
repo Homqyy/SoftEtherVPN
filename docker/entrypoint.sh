@@ -49,6 +49,10 @@ if [ $# -eq 1 ]; then
         g_bin=/vpn/bin/vpnbridge
         g_start_cmd="$g_bin start"
         g_exit_cmd="$g_bin stop"
+    elif [ "$1" == "vpnclient" ]; then
+        g_bin=/vpn/bin/vpnclient
+        g_start_cmd="$g_bin start"
+        g_exit_cmd="$g_bin stop"
     else
         usage
     fi

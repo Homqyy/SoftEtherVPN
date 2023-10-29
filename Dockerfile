@@ -7,6 +7,7 @@ ARG TARGETARCH=amd64
 ARG COPY_SRC_DIR=.
 ARG COPY_DST_DIR=/root
 ARG VPN_BIN_DIR=/usr/local/libexec/softether/vpnserver
+ARG VPN_CMD=vpncmd
 
 COPY ${COPY_SRC_DIR} ${COPY_DST_DIR}
 
@@ -70,3 +71,5 @@ RUN chmod +x /vpn/bin/* /bin/entrypoint.sh
 EXPOSE 443/tcp 992/tcp 1194/tcp 1194/udp 5555/tcp 500/udp 4500/udp
 
 ENTRYPOINT [ "/bin/entrypoint.sh" ]
+
+CMD [ "$VPN_CMD" ]

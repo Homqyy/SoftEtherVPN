@@ -16,12 +16,13 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  build-and-publish:
+  build-and-publish-server:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: softethervpn-server
       VPN_NAME: vpnserver
       VPN_BIN_DIR: /usr/local/libexec/softether/vpnserver
+      VPN_CMD: vpnserver
 
     steps:
       - name: Set up QEMU
@@ -46,6 +47,7 @@ jobs:
           build-args: |
             VPN_NAME=${{ env.VPN_NAME }}
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
+            VPN_CMD=${{ env.VPN_CMD }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
@@ -55,6 +57,7 @@ jobs:
       IMAGE_NAME: softethervpn-bridge
       VPN_NAME: vpnbridge
       VPN_BIN_DIR: /usr/local/libexec/softether/vpnbridge
+      VPN_CMD: vpnbridge
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -78,6 +81,7 @@ jobs:
           build-args: |
             VPN_NAME=${{ env.VPN_NAME }}
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
+            VPN_CMD=${{ env.VPN_CMD }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
@@ -87,6 +91,7 @@ jobs:
       IMAGE_NAME: softethervpn-client
       VPN_NAME: vpnclient
       VPN_BIN_DIR: /usr/local/libexec/softether/vpnclient
+      VPN_CMD: vpnclient
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -110,5 +115,6 @@ jobs:
           build-args: |
             VPN_NAME=${{ env.VPN_NAME }}
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
+            VPN_CMD=${{ env.VPN_CMD }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
