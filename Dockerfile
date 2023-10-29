@@ -49,6 +49,7 @@ RUN CMAKE_FLAGS="-DSE_PIDDIR=/vpn/pid \
 
 FROM ${IMAGE_NAME}:${IMAGE_VERSION}
 ARG VPN_BIN_DIR
+ARG VPN_CMD
 
 RUN mkdir /vpn /vpn/bin /vpn/log /vpn/pid /vpn/db
 
