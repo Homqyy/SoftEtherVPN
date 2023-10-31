@@ -50,15 +50,15 @@ if [ "$conf_cmd" == "vpncmd" ]; then
     g_exit_cmd=$g_bin
 elif [ "$conf_cmd" == "vpnserver" ]; then
     g_bin=/vpn/bin/vpnserver
-    g_start_cmd="$g_bin start"
+    g_start_cmd="$g_bin execsvc"
     g_exit_cmd="$g_bin stop"
 elif [ "$conf_cmd" == "vpnbridge" ]; then
     g_bin=/vpn/bin/vpnbridge
-    g_start_cmd="$g_bin start"
+    g_start_cmd="$g_bin execsvc"
     g_exit_cmd="$g_bin stop"
 elif [ "$conf_cmd" == "vpnclient" ]; then
     g_bin=/vpn/bin/vpnclient
-    g_start_cmd="$g_bin start"
+    g_start_cmd="$g_bin execsvc"
     g_exit_cmd="$g_bin stop"
 else
     echo "invalid argument: $conf_cmd"
