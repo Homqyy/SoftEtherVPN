@@ -5,6 +5,7 @@
 g_bin=
 g_start_cmd=
 g_exit_cmd=
+g_bg=
 
 #################################### function
 
@@ -50,19 +51,27 @@ if [ "$conf_cmd" == "vpncmd" ]; then
     g_exit_cmd=$g_bin
 elif [ "$conf_cmd" == "vpnserver" ]; then
     g_bin=/vpn/bin/vpnserver
-    g_start_cmd="$g_bin execsvc"
+    g_start_cmd="$g_bin execsvc &"
     g_exit_cmd="$g_bin stop"
+    g_bg=1
 elif [ "$conf_cmd" == "vpnbridge" ]; then
     g_bin=/vpn/bin/vpnbridge
-    g_start_cmd="$g_bin execsvc"
+    g_start_cmd="$g_bin execsvc &"
     g_exit_cmd="$g_bin stop"
+    g_bg=1
 elif [ "$conf_cmd" == "vpnclient" ]; then
     g_bin=/vpn/bin/vpnclient
-    g_start_cmd="$g_bin execsvc"
+    g_start_cmd="$g_bin execsvc &"
     g_exit_cmd="$g_bin stop"
+    g_bg=1
 else
     echo "invalid argument: $conf_cmd"
     usage
 fi
 
-$g_start_cmd
+if [ -z "$g_bg" ]; then
+    $g_start_cmd
+else
+    $g_start_cmd &
+    wait $!
+fi
