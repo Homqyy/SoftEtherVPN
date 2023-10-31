@@ -1,5 +1,17 @@
 # SoftEtherVPN on Docker
 
+**For Chinese, please read: [README-zh](https://github.com/Homqyy/SoftEtherVPN/blob/actions/docker_server/docker/README-zh.md)**
+
+Repository Source Code: [Homqyy/SoftEtherVPN](https://github.com/Homqyy/SoftEtherVPN)
+
+Base Repository: [SoftEtherVPN/SoftEtherVPN:master](https://github.com/SoftEtherVPN/SoftEtherVPN)
+
+Feature Differences:
+
+- [x] Supports automatic image building
+- [ ] No regional restrictions on route configuration
+- [ ] Logs display IP addresses
+
 ## Supported Images
 
 - [homqyy/softethervpn-server](https://hub.docker.com/r/homqyy/softethervpn-server)
