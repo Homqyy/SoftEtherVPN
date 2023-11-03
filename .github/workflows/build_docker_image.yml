@@ -54,6 +54,8 @@ jobs:
   build-and-publish-bridge:
     runs-on: ubuntu-latest
     env:
+      BASE_IMAGE_NAME: 'arm64v8/centos'
+      BASE_IMAGE_TAG: '7.9.2009'
       IMAGE_NAME: softethervpn-bridge
       VPN_NAME: vpnbridge
       VPN_BIN_DIR: /usr/local/libexec/softether/vpnbridge
@@ -82,6 +84,8 @@ jobs:
             VPN_NAME=${{ env.VPN_NAME }}
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
             VPN_CMD=${{ env.VPN_CMD }}
+            IMAGE_NAME=${{ env.BASE_IMAGE_NAME }}}
+            IMAGE_VERSION=${{ env.BASE_IMAGE_TAG }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
