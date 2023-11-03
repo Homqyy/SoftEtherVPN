@@ -120,8 +120,6 @@ jobs:
             VPN_NAME=${{ env.VPN_NAME }}
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
             VPN_CMD=${{ env.VPN_CMD }}
-            IMAGE_NAME=${{ env.BASE_IMAGE_NAME }}}
-            IMAGE_VERSION=${{ env.BASE_IMAGE_TAG }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
