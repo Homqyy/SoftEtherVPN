@@ -51,12 +51,12 @@ jobs:
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
-  build-and-publish-bridge-aarch64:
+  build-and-publish-bridge-arm:
     runs-on: ubuntu-latest
     env:
-      BASE_IMAGE_NAME: 'arm64v8/centos'
-      BASE_IMAGE_TAG: '7.9.2009'
-      IMAGE_NAME: softethervpn-bridge
+      BASE_IMANGE_NAME: arm64v8/centos
+      BASE_IMAGE_TAG: 7.9.2009
+      IMAGE_NAME: softethervpn-bridge-arm64
       VPN_NAME: vpnbridge
       VPN_BIN_DIR: /usr/local/libexec/softether/vpnbridge
       VPN_CMD: vpnbridge
@@ -74,7 +74,7 @@ jobs:
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
-      
+
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
@@ -84,8 +84,8 @@ jobs:
             VPN_NAME=${{ env.VPN_NAME }}
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
             VPN_CMD=${{ env.VPN_CMD }}
-            IMAGE_NAME=${{ env.BASE_IMAGE_NAME }}}
-            IMAGE_VERSION=${{ env.BASE_IMAGE_TAG }}
+            IMAGE_NAME=${{ env.BASE_IMANGE_NAME }}
+            IMANGE_VERSION=${{ env.BASE_IMAGE_TAG }}
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
@@ -103,18 +103,22 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
-          platforms: linux/amd64
+          platforms: |
+            linux/amd64
+            linux/arm64
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
-      
+
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64
+          platforms: |
+            linux/amd64
+            linux/arm64
           push: true
           build-args: |
             VPN_NAME=${{ env.VPN_NAME }}
