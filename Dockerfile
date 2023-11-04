@@ -17,13 +17,14 @@ WORKDIR ${COPY_DST_DIR}
 RUN yum -y update \
     && yum -y install epel-release && yum -y update \
     && yum -y groupinstall "Development Tools" \
-    && yum -y install ncurses-devel openssl11-devel libsodium-devel readline-devel zlib-devel wget
+    && yum -y install ncurses-devel libsodium-devel readline-devel zlib-devel wget
 
-# link openssl
-
-RUN ln -s /usr/lib64/libssl.so.1.1 /usr/lib64/libssl.so \
-    && ln -s /usr/lib64/libcrypto.so.1.1 /usr/lib64/libcrypto.so \
-    && ln -s /usr/include/openssl11/openssl /usr/include/openssl
+# install openssl-1.1.1
+RUN wget https://ftp.openssl.org/source/old/1.1.1/openssl-1.1.1.tar.gz \
+        && tar -xvf openssl-1.1.1.tar.gz \
+        && cd openssl-1.1.1 \
+        && ./config --prefix=/usr && make && make install \
+        && rm -rf openssl-1.1.1.tar.gz openssl-1.1.1
 
 # install cmake
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
@@ -56,12 +57,14 @@ RUN mkdir /vpn /vpn/bin /vpn/log /vpn/pid /vpn/db
 # install dependencies
 RUN yum -y update \
     && yum -y install epel-release && yum -y update \
-    && yum -y install openssl11-libs libsodium ncurses-libs zlib readline
+    && yum -y install libsodium ncurses-libs zlib readline
 
 # copy from compile stage
 COPY --from=compile ${VPN_BIN_DIR}/* /vpn/bin/
 COPY --from=compile /usr/local/libexec/softether/vpncmd/vpncmd /vpn/bin/
-COPY --from=compile /usr/local/lib64/libcedar.so /usr/local/lib64/libmayaqua.so /lib64/
+COPY --from=compile /usr/lib64/libcedar.so /usr/local/lib64/libmayaqua.so /lib64/
+COPY --from=compile /usr/lib64/libssl.so /usr/lib64/libcrypto.so /lib64
+COPY --from=compile /usr/include/openssl /usr/include/
 
 # copy entrypoint
 COPY docker/entrypoint.sh /bin/entrypoint.sh
