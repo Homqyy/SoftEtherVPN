@@ -8,6 +8,7 @@ ARG COPY_SRC_DIR=.
 ARG COPY_DST_DIR=/root
 ARG VPN_BIN_DIR=/usr/local/libexec/softether/vpnserver
 ARG VPN_CMD=vpncmd
+ARG VPN_CONFIG_OPTIONS
 
 COPY ${COPY_SRC_DIR} ${COPY_DST_DIR}
 
@@ -43,7 +44,8 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 # build
 RUN CMAKE_FLAGS="-DSE_PIDDIR=/vpn/pid \
     -DSE_LOGDIR=/vpn/log \
-    -DSE_DBDIR=/vpn/db" \
+    -DSE_DBDIR=/vpn/db \
+    ${VPN_CONFIG_OPTIONS}" \
     ./configure \
     && make -C build \
     && make -C build install

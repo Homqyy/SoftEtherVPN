@@ -51,7 +51,7 @@ jobs:
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
 
-  build-and-publish-bridge-arm:
+  build-and-publish-bridge-arm64:
     runs-on: ubuntu-latest
     env:
       BASE_IMANGE_NAME: arm64v8/centos
@@ -60,6 +60,7 @@ jobs:
       VPN_NAME: vpnbridge
       VPN_BIN_DIR: /usr/local/libexec/softether/vpnbridge
       VPN_CMD: vpnbridge
+      VPN_CONFIG_OPTIONS: -DSKIP_CPU_FEATURES=1
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -84,6 +85,7 @@ jobs:
             VPN_NAME=${{ env.VPN_NAME }}
             VPN_BIN_DIR=${{ env.VPN_BIN_DIR }}
             VPN_CMD=${{ env.VPN_CMD }}
+            VPN_CONFIG_OPTIONS=${{ env.VPN_CONFIG_OPTIONS }}
             IMAGE_NAME=${{ env.BASE_IMANGE_NAME }}
             IMANGE_VERSION=${{ env.BASE_IMAGE_TAG }}
           tags: |
