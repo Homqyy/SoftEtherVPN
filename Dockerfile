@@ -62,7 +62,7 @@ RUN yum -y update \
 # copy from compile stage
 COPY --from=compile ${VPN_BIN_DIR}/* /vpn/bin/
 COPY --from=compile /usr/local/libexec/softether/vpncmd/vpncmd /vpn/bin/
-COPY --from=compile /usr/lib64/libcedar.so /usr/local/lib64/libmayaqua.so /lib64/
+COPY --from=compile /usr/local/lib64/libcedar.so /usr/local/lib64/libmayaqua.so /lib64/
 COPY --from=compile /usr/lib64/libssl.so /usr/lib64/libcrypto.so /lib64
 COPY --from=compile /usr/include/openssl /usr/include/
 
