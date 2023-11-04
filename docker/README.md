@@ -8,7 +8,7 @@ Base Repository: [SoftEtherVPN/SoftEtherVPN:master](https://github.com/SoftEther
 
 Feature Differences:
 
-- [x] Supports automatic image building
+- [x] Supports automatic image building: `linux/amd64`, `linux/arm64`
 - [ ] No regional restrictions on route configuration
 - [ ] Logs display IP addresses
 
