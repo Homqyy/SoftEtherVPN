@@ -40,7 +40,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
     && CMAKE_TOOL="$(basename $CMAKE_SCRIPT_URL)" \
     && chmod +x $CMAKE_TOOL \
     && ./$CMAKE_TOOL --skip-license --prefix=/usr/local \
-    && rm $CMAKE_TOOL
+    && rm -rf $CMAKE_TOOL
 
 # prepare for arm64
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
