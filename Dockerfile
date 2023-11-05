@@ -43,11 +43,9 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 
 # prepare for arm64
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
-        # link openssl
         ln -s /usr/lib/libssl.so /usr/lib64/libssl.so; \
         ln -s /usr/lib/libcrypto.so /usr/lib64/libcrypto.so; \
-        # no SSE2
-        sed -i 's/cmake_host_system_information(RESULT HAS_SSE2 QUERY HAS_SSE2)/#cmake_host_system_information(RESULT HAS_SSE2 QUERY HAS_SSE2)/' src/Cedar/CMakeLists.txt
+        sed -i 's/cmake_host_system_information(RESULT HAS_SSE2 QUERY HAS_SSE2)/#cmake_host_system_information(RESULT HAS_SSE2 QUERY HAS_SSE2)/' src/Cedar/CMakeLists.txt \
     fi;
 
 
