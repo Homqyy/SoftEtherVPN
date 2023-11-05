@@ -60,7 +60,6 @@ jobs:
       VPN_NAME: vpnbridge
       VPN_BIN_DIR: /usr/local/libexec/softether/vpnbridge
       VPN_CMD: vpnbridge
-      VPN_CONFIG_OPTIONS: -DSKIP_CPU_FEATURES=1
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
