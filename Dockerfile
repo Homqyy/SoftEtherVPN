@@ -24,8 +24,9 @@ RUN yum -y update \
 RUN wget https://ftp.openssl.org/source/old/1.1.1/openssl-1.1.1.tar.gz \
         && tar -xvf openssl-1.1.1.tar.gz \
         && cd openssl-1.1.1 \
-        && ./config --prefix=/usr && make && make install \
-        && rm -rf openssl-1.1.1.tar.gz openssl-1.1.1
+        && ./config --prefix=/usr && make && make install_dev \
+        && cd - \
+        && rm -rf openssl-1.1.1.tar.gz openssl-1.1.1 
 
 # install cmake
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
