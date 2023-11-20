@@ -20,6 +20,12 @@ Feature Differences:
 
 ## How to Run
 
+exec `vpncmd` to manage vpnclient/vpnserver/vpnbridge：
+
+```bash
+docker exec -it homqyy/softethervpn-server /vpn/bin/vpncmd
+```
+
 ### Docker
 
 Server:
