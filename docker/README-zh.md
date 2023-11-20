@@ -21,7 +21,7 @@
 运行`vpncmd`以对 vpnclient/vpnserver/vpnbridge 进行管理：
 
 ```bash
-docker exec -it homqyy/softethervpn-server /vpn/bin/vpncmd
+docker exec -it <your_container_name> /vpn/bin/vpncmd
 ```
 
 ### Docker
